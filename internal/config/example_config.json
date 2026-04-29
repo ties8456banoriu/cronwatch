@@ -1,0 +1,31 @@
+{
+  "check_interval": 30000000000,
+  "log_level": "info",
+  "alert_webhook": "https://hooks.example.com/cronwatch",
+  "jobs": [
+    {
+      "name": "daily-backup",
+      "schedule": "0 2 * * *",
+      "max_duration": 3600000000000,
+      "alert_on_miss": true,
+      "alert_on_slow": true,
+      "grace_period": 300000000000
+    },
+    {
+      "name": "hourly-sync",
+      "schedule": "0 * * * *",
+      "max_duration": 600000000000,
+      "alert_on_miss": true,
+      "alert_on_slow": false,
+      "grace_period": 60000000000
+    },
+    {
+      "name": "health-check",
+      "schedule": "*/5 * * * *",
+      "max_duration": 30000000000,
+      "alert_on_miss": false,
+      "alert_on_slow": true,
+      "grace_period": 10000000000
+    }
+  ]
+}
