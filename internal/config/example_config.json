@@ -1,31 +1,24 @@
 {
-  "check_interval": 30000000000,
-  "log_level": "info",
-  "alert_webhook": "https://hooks.example.com/cronwatch",
+  "check_interval_seconds": 60,
+  "alert_webhook_url": "https://hooks.example.com/cronwatch",
   "jobs": [
     {
       "name": "daily-backup",
       "schedule": "0 2 * * *",
-      "max_duration": 3600000000000,
-      "alert_on_miss": true,
-      "alert_on_slow": true,
-      "grace_period": 300000000000
+      "max_duration_seconds": 300,
+      "grace_period_seconds": 600
     },
     {
       "name": "hourly-sync",
       "schedule": "0 * * * *",
-      "max_duration": 600000000000,
-      "alert_on_miss": true,
-      "alert_on_slow": false,
-      "grace_period": 60000000000
+      "max_duration_seconds": 60,
+      "grace_period_seconds": 120
     },
     {
-      "name": "health-check",
-      "schedule": "*/5 * * * *",
-      "max_duration": 30000000000,
-      "alert_on_miss": false,
-      "alert_on_slow": true,
-      "grace_period": 10000000000
+      "name": "weekly-report",
+      "schedule": "0 8 * * 1",
+      "max_duration_seconds": 900,
+      "grace_period_seconds": 1800
     }
   ]
 }
