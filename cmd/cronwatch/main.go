@@ -31,6 +31,10 @@ func main() {
 		os.Exit(0)
 	}
 
+	if len(cfg.Jobs) == 0 {
+		log.Fatal("no jobs defined in config; nothing to monitor")
+	}
+
 	log.Printf("cronwatch starting: monitoring %d job(s), check interval %v",
 		len(cfg.Jobs), cfg.CheckInterval)
 
