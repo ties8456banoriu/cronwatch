@@ -88,3 +88,25 @@ func TestComputeStats_MissingJob(t *testing.T) {
 		t.Error("expected ok=false for missing job")
 	}
 }
+
+func TestComputeStats_SingleRecord(t *testing.T) {
+	s := New(tempPath(t))
+	addStatRecord(t, s, "ping", 500*time.Millisecond, true)
+
+	stats, ok := ComputeStats(s, "ping")
+	if !ok {
+		t.Fatal("expected stats")
+	}
+	if stats.Count != 1 {
+		t.Errorf("Count = %d, want 1", stats.Count)
+	}
+	if stats.MeanDur != 500*time.Millisecond {
+		t.Errorf("MeanDur = %v, want 500ms", stats.MeanDur)
+	}
+	if stats.MedianDur != 500*time.Millisecond {
+		t.Errorf("MedianDur = %v, want 500ms", stats.MedianDur)
+	}
+	if stats.SuccessRate != 1.0 {
+		t.Errorf("SuccessRate = %v, want 1.0", stats.SuccessRate)
+	}
+}
