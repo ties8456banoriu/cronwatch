@@ -89,6 +89,21 @@ func TestForecast_TrendDegrading(t *testing.T) {
 	}
 }
 
+func TestForecast_TrendImproving(t *testing.T) {
+	s := New(tempPath(t))
+	for _, d := range []int64{250, 200, 160, 130, 110, 100} {
+		addForecastRecord(t, s, "job5", d, "success")
+	}
+
+	result, err := Forecast(s, "job5", 10)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if result.TrendDirection != "improving" {
+		t.Errorf("expected improving trend, got %s", result.TrendDirection)
+	}
+}
+
 func TestForecast_MissingJob(t *testing.T) {
 	s := New(tempPath(t))
 	_, err := Forecast(s, "nonexistent", 10)
