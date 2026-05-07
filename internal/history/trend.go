@@ -44,6 +44,11 @@ func AnalyzeTrend(s *Store, jobName string, maxSamples int) (TrendResult, error)
 		records = records[len(records)-maxSamples:]
 	}
 
+	// Need at least 2 records to compute a meaningful slope.
+	if len(records) < 2 {
+		return TrendResult{}, errors.New("trend: insufficient records for job: " + jobName)
+	}
+
 	n := float64(len(records))
 	var sumX, sumY, sumXY, sumX2 float64
 
