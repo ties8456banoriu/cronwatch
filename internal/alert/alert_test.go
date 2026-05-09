@@ -61,6 +61,15 @@ func TestWebhookNotifier_Send_NonOK(t *testing.T) {
 	}
 }
 
+// TestWebhookNotifier_Send_InvalidURL verifies that an unreachable or
+// malformed URL causes Send to return an error rather than silently succeed.
+func TestWebhookNotifier_Send_InvalidURL(t *testing.T) {
+	wn := alert.NewWebhookNotifier("://invalid-url")
+	if err := wn.Send(makeAlert(alert.LevelError)); err == nil {
+		t.Fatal("expected error for invalid URL")
+	}
+}
+
 func TestMultiNotifier_AllSucceed(t *testing.T) {
 	m := alert.NewMulti(&alert.LogNotifier{}, &alert.LogNotifier{})
 	if err := m.Send(makeAlert(alert.LevelWarn)); err != nil {
